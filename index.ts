@@ -34,7 +34,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.once("clientReady", async (c) => {
 	const body = commands.map((cmd) => cmd.data.toJSON());
 	await c.application.commands.set(body);
-	console.log(`Registered ${body.length} slash command(s) as ${c.user.tag}`);
+	console.log(`Registered ${body.length} slash command(s) as ${c.user.tag} (ID: ${c.user.id})`);
 });
 
 client.on("interactionCreate", async (interaction) => {
