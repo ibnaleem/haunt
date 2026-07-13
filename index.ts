@@ -27,7 +27,6 @@ for await (const file of glob.scan(".")) {
 	commands.set(mod.data.name, mod as Command);
 }
 
-console.log(`Loaded ${commands.size} command(s): ${[...commands.keys()].join(", ")}`);
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
