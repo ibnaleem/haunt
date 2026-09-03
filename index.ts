@@ -7,6 +7,8 @@ import {
 	type SlashCommandBuilder,
 } from "discord.js";
 
+import { logCommandExecution } from "./utils/db";
+
 const token = process.env.DISCORD_BOT_TOKEN;
 if (!token) throw new Error("DISCORD_BOT_TOKEN missing — set it in .env");
 
@@ -37,20 +39,27 @@ client.once("clientReady", async (c) => {
 });
 
 client.on("interactionCreate", async (interaction) => {
-	if (!interaction.isChatInputCommand()) return;
-	const command = commands.get(interaction.commandName);
-	if (!command) return;
-	try {
-		await command.execute(interaction);
-	} catch (err) {
-		console.error(`Error in /${interaction.commandName}:`, err);
-		const reply = { content: "Command failed.", ephemeral: true };
-		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp(reply);
-		} else {
-			await interaction.reply(reply);
-		}
-	}
+  if (!interaction.isChatInputCommand()) return;
+
+  const command = commands.get(interaction.commandName);
+
+  if (!command) return;
+
+  logCommandExecution(interaction);
+
+  try {
+    await command.execute(interaction);
+  } catch (err) {
+    console.error(`Error in /${interaction.commandName}:`, err);
+
+    const reply = { content: "Command failed.", ephemeral: true };
+
+    if (interaction.replied || interaction.deferred) {
+      await interaction.followUp(reply);
+    } else {
+      await interaction.reply(reply);
+    }
+  }
 });
 
 await client.login(token);
