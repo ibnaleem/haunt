@@ -1,7 +1,7 @@
 import { Database } from "bun:sqlite";
 import type { ChatInputCommandInteraction } from "discord.js";
 
-export const db = new Database("bot.db");
+export const db = new Database("command_executions.db");
 
 export function logCommandExecution(interaction: ChatInputCommandInteraction) {
   db.query(`
