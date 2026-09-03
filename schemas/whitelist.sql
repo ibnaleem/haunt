@@ -1,0 +1,20 @@
+CREATE TABLE Whitelist (
+    id INTEGER PRIMARY KEY,
+    guild_id INTEGER NOT NULL,
+    discord_user_id INTEGER NOT NULL,
+    can_ban INTEGER NOT NULL DEFAULT 0,
+    can_kick INTEGER NOT NULL DEFAULT 0,
+    can_timeout INTEGER NOT NULL DEFAULT 0,
+    can_purge INTEGER NOT NULL DEFAULT 0,
+    can_perma_ban INTEGER NOT NULL DEFAULT 0,
+    can_channel_create INTEGER NOT NULL DEFAULT 0,
+    can_channel_delete INTEGER NOT NULL DEFAULT 0,
+    can_channel_edit INTEGER NOT NULL DEFAULT 0,
+    can_role_create INTEGER NOT NULL DEFAULT 0,
+    can_role_delete INTEGER NOT NULL DEFAULT 0,
+    can_role_edit INTEGER NOT NULL DEFAULT 0,
+    can_mention_everyone INTEGER NOT NULL DEFAULT 0,
+    can_post_links INTEGER NOT NULL DEFAULT 0,
+    can_post_discord_invites INTEGER NOT NULL DEFAULT 0,
+    UNIQUE (guild_id, discord_user_id)
+);
